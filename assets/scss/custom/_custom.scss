@@ -1,0 +1,130 @@
+/* Global variables*/
+:root {
+    --global-font-family: "glyph-correction", "Amstelvar", "Noto Serif SC", serif;
+    --mark-color: #ee5253;
+    --button-color: #42cc8c;
+}
+
+/* Styling from the author */
+body {
+    font-family: var(--global-font-family);
+}
+
+.viva-la-vida {
+    margin-top: 50px;
+    text-align: center;
+    font-family: "Cinzel Decorative", serif !important;
+    background-image: linear-gradient(
+        90deg,
+        #a166ab 0,
+        #a166ab 40%,
+        #ef4e7b 45%,
+        #f37055 50%,
+        #ef4e7b 55%,
+        #a166ab 60%,
+        #a166ab 100%
+    );
+    background-size: cover;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav {
+    font-size: 1em;
+}
+
+.brand {
+    font-weight: 600;
+    line-height: 2;
+    font-size: 1.3em;
+}
+
+.home .poetry {
+    padding: 10em 1em;
+}
+
+.tag-cloud-item {
+    font-family: "Cinzel", serif;
+}
+
+.list-title {
+    font-family: "Cinzel Decorative", cursive;
+}
+
+.post-subtitle {
+    font-size: 1.1em;
+    text-align: center;
+    font-weight: 300;
+    margin-top: -0.618em;
+}
+
+.sticker {
+    width: 30%;
+    height: 30%;
+}
+
+.caption {
+    margin-bottom: 2em;
+}
+
+/* External styling to add new features */
+// button
+// https://codemyui.com/pure-css-gradient-button-hover-effect/
+.btn {
+    flex: 1 1 auto;
+    margin: 10px;
+    padding: 18px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    font-family: "Cinzel Decorative", serif;
+    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px #eee;
+    border-radius: 10px;
+}
+
+/* Demo Stuff End -> */
+
+/* <- Magic Stuff Start */
+
+.btn:hover {
+    background-position: right center; /* change the direction of the change here */
+}
+
+.btn-1 {
+    background-image: linear-gradient(to right, #f6d365 0%, #fda085 51%, #f6d365 100%);
+}
+
+.btn-2 {
+    background-image: linear-gradient(to right, #fbc2eb 0%, #a6c1ee 51%, #fbc2eb 100%);
+}
+
+.btn-3 {
+    background-image: linear-gradient(to right, #84fab0 0%, #8fd3f4 51%, #84fab0 100%);
+}
+
+.btn-4 {
+    background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);
+}
+
+.btn-5 {
+    background-image: linear-gradient(to right, #ffecd2 0%, #fcb69f 51%, #ffecd2 100%);
+}
+
+/* Magic Stuff End -> */
+
+// mark
+.mark {
+    text-decoration: none;
+    border-bottom: 2px solid var(--mark-color);
+    box-shadow: inset 0 -0.25px 0 var(--mark-color);
+    color: inherit;
+    transition: background 0.1s cubic-bezier(0.33, 0.66, 0.66, 1);
+}
+
+.mark:hover {
+    color: white;
+    background: var(--mark-color);
+}

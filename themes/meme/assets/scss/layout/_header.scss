@@ -1,0 +1,87 @@
+.header {
+    z-index: 3;
+}
+
+@if ($headerLayoutFlex) {
+    .header {
+        position: fixed;
+        width: 100%;
+    }
+    .header-wrapper {
+        padding: 1em 0;
+        @include blur;
+        background: $headerBackground;
+    }
+    .header-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 auto;
+        max-width: $postWidth;
+    }
+    .header-inner.list {
+        max-width: $listWidth;
+    }
+    .site-brand {
+        margin-right: 1em;
+    }
+} @else {
+    .header {
+        position: relative;
+        background: $headerBackground;
+    }
+    .site-brand {
+        text-align: center;
+    }
+}
+
+$brandHeight: null;
+@if ($siteBrandSVG) {
+    .brand {
+        width: $siteBrandSVGWidth;
+        height: $siteBrandSVGHeight;
+        fill: $siteBrandSVGFill;
+    }
+    $brandHeight: $siteBrandSVGHeight;
+} @else {
+    .brand {
+        font-size: $siteBrandFontSize;
+        color: $siteBrandFontColor;
+        text-decoration: none;
+        &:hover {
+            color: $siteBrandFontColor;
+        }
+    }
+    $brandHeight: $siteBrandFontSize * /* body line height */ 1.618;
+}
+
+@if ($headerLayoutFlex) {
+    :root
+    {
+        /* This is an approximate calculation, it won't cover all scenarios */
+        --header-height: calc(
+            max(
+                /* menu */
+                #{$fontSize * /* .nav font size */ 0.8 * /* .menu line height */ 1.5},
+                /* brand */
+                #{$brandHeight}
+            ) + #{/* .header-wrapper top+bottom margin */ 2 * $fontSize}
+        );
+    }
+
+    /* Work-around for anchors being hidden below the header */
+    #main
+    {
+        p, div, ul, ol, form, section, h1, h2, h3, h4, h5, h6
+        {
+            &[id]::before
+            {
+                content: "";
+                display: block;
+                visibility: hidden;
+                height: var(--header-height);
+                margin: calc(-1 * var(--header-height)) 0 0;
+            }
+        }
+    }
+}
