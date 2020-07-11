@@ -2,7 +2,7 @@
 title: "从Google Colab到布大超算"
 subtitle: ""
 date: 2020-07-07T10:33:30+01:00
-categories: [Tech, Computing]
+categories: [Tech, Configuration]
 tags: [Supercomputers]
 slug: "use-uob-supercomputers"
 toc: true
