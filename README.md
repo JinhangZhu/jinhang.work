@@ -1,6 +1,6 @@
 # jinhang.work
 
-![Configuration](https://i.loli.net/2020/07/12/LeoYuGm579IBURa.png)
+![Configuration](https://i.loli.net/2020/07/12/MRrUVXsZK4W5nGL.png)
 
 [![Generator is Hugo](https://img.shields.io/badge/Generator%20is-Hugo-ff4088?&logo=hugo)](https://github.com/gohugoio/hugo)
 [![Theme is MemE](https://img.shields.io/badge/Theme%20is-MemE-2a6df4)](https://github.com/reuixiy/hugo-theme-meme)
