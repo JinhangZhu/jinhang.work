@@ -35,7 +35,7 @@
 
 [[socials]]
     id = "linkedin"
-    url = "https://www.linkedin.com/in/jinhangzhu/"
+    url = "https://www.linkedin.com/in/jinhangzhu"
     icon = "linkedin"
     title = "Linkedin"
     weight = 5
