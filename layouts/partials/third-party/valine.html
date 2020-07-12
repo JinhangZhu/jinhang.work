@@ -1,0 +1,103 @@
+<script>
+    function loadComments() {
+        if (typeof Valine === 'undefined') {
+            var getScript = (options) => {
+                var script = document.createElement('script');
+                script.defer = true;
+                script.crossOrigin = 'anonymous';
+                Object.keys(options).forEach((key) => {
+                    script[key] = options[key];
+                });
+                document.body.appendChild(script);
+            };
+            getScript({
+                src: 'https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js',
+                onload: () => {
+                    newValine();
+                }
+            });
+        } else {
+            newValine();
+        }
+    }
+    function newValine() {
+        new Valine({
+            el: '#vcomments',
+            appId: '{{ .Site.Params.valineAppId }}',
+            appKey: '{{ .Site.Params.valineAppKey }}',
+            placeholder: '{{ .Site.Params.valinePlaceholder }}',
+            path: {{ .Site.Params.valinePath | default "location.pathname" | safeJS }},
+            avatar: '{{ .Site.Params.valineAvatar }}',
+            meta: {{ .Site.Params.valineMeta }},
+            pageSize: {{ .Site.Params.valinePageSize }},
+            lang: '{{ .Site.Params.valineLang }}',
+            visitor: {{ .Site.Params.valineVisitor }},
+            highlight: {{ .Site.Params.valineHighlight }},
+            avatarForce: {{ .Site.Params.valineAvatarForce }},
+            recordIP: {{ .Site.Params.valineRecordIP }},
+            serverURLs: '{{ .Site.Params.valineServerURLs }}',
+            emojiCDN: '//i0.hdslb.com/bfs/emote/',
+            emojiMaps: {
+                "XSK_卖萌":"4cd1024d0c2ecee93224477946656d32c1705ccf.png" ,
+                "XSK_吃瓜群众":"5d0d6cc54b508d30b4f50b6b5f7b7e1e259d84ea.png" ,
+                "XSK_吃惊":"7a4cb0b644214d476ce198ddf6a7a0aa31311199.png" ,
+                "XSK_害怕":"7407634bf67bfe9d7806f15d57608a1b18c2b4c2.png" ,
+                "XSK_扶额":"a4d8f95baaa24821fd591a7dbeee1b869e760f59.png" ,
+                "XSK_滑稽":"d3717f10ffe9787336bc39a09214270988521a67.png" ,
+                "XSK_哼":"8854f1b8a82126e3b87f3a1563da5feb55b23e71.png" ,
+                "XSK_机智":"e543c0a823ca915df9362283f4ae950e9e9cc2e9.png" ,
+                "XSK_哭泣":"a23055546c19eba663b16370b8e072394d87ff53.png" ,
+                "XSK_睡觉觉":"40ef7e6d931acb37e5514b70d13663e86dc3698b.png" ,
+                "XSK_生气":"bf398cbbcfaae107d1b59aaf03895f38422e3d87.png" ,
+                "XSK_偷看":"52463ded4f23649db10ba3ced662ed946c5edf0b.png" ,
+                "XSK_吐血":"5772d22015e5b2b40a9fe302b5967ec7282ac848.png" ,
+                "XSK_无语":"b6c763c6484ce2e48299ceb21861e46318868871.png" ,
+                "XSK_摇头":"b7278f750c6f2235f41f37056d727f25d3bf781f.png" ,
+                "XSK_疑问":"7750b698d15a1b8e83c0f59106e8e9cd5cb57897.png" ,
+                "XSK_die":"52543025a070fde5c01a10320c9636ec3173ac99.png" ,
+                "XSK_OK":"52a0dcee66c91bf123bf53bd48a269b1317d17f9.png" ,
+                "XSK_肥皂":"7f1a857e9430dcf3050ce0ef5fa19aefebea6dc4.png" ,
+                "XSK_大笑":"1d3355fb89c24ab3c50e5c152d8b990a290dc63e.png" ,
+                "2233_大笑":"16b8794be990cefa6caeba4d901b934a227ee3b8.png" ,
+                "2233_吃惊":"d1628c43d35b1530c0504a643ff80b6189fa0a43.png" ,
+                "2233_大哭":"476a2a60f6e337b8c0697a592e0aa82781f6b33b.png" ,
+                "2233_耶":"d7178e258a0efc969b65ccc2b1322fb235f5dff4.png" ,
+                "2233_卖萌":"ea893aa25355de95ab4f03c2dad3f0c58d0c159e.png" ,
+                "2233_疑问":"0b41f509351958dbb63d472fec0132d1bd03bd14.png" ,
+                "2233_汗":"247cd9df8cdf84b18368c21e3b2dd374e84c0927.png" ,
+                "2233_困惑":"714eeb4eae0d0933b4ff08b7df788b1982f6b940.png" ,
+                "2233_怒":"f31953119c51b9748016440ac0b632f779929b37.png" ,
+                "2233_委屈":"d9d0bf9d358af8d5761093ec66d4e3f60d963a63.png" ,
+                "2233_郁闷":"485203fe7100f2c8fc40b2800a18fe20b35f2f1a.png" ,
+                "2233_第一":"3754ee6e5985bd0bd7dfb668981f2a8733398ebd.png" ,
+                "2233_喝水":"695bf5429472049b52c1e0de586f8a2511195a23.png" ,
+                "2233_吐魂":"e999af499edf38a91ca68b1a9d2f97042c1d6734.png" ,
+                "2233_无言":"fdb5870f32cfaf7949e0f88a13f6feba4a48b719.png" ,
+                "tv_doge": "6ea59c827c414b4a2955fe79e0f6fd3dcd515e24.png",
+                "tv_亲亲": "a8111ad55953ef5e3be3327ef94eb4a39d535d06.png",
+                "tv_偷笑": "bb690d4107620f1c15cff29509db529a73aee261.png",
+                "tv_再见": "180129b8ea851044ce71caf55cc8ce44bd4a4fc8.png",
+                "tv_冷漠": "b9cbc755c2b3ee43be07ca13de84e5b699a3f101.png",
+                "tv_发怒": "34ba3cd204d5b05fec70ce08fa9fa0dd612409ff.png",
+                "tv_发财": "34db290afd2963723c6eb3c4560667db7253a21a.png",
+                "tv_可爱": "9e55fd9b500ac4b96613539f1ce2f9499e314ed9.png",
+                "tv_吐血": "09dd16a7aa59b77baa1155d47484409624470c77.png",
+                "tv_呆": "fe1179ebaa191569b0d31cecafe7a2cd1c951c9d.png",
+                "tv_呕吐": "9f996894a39e282ccf5e66856af49483f81870f3.png",
+                "tv_困": "241ee304e44c0af029adceb294399391e4737ef2.png",
+                "tv_坏笑": "1f0b87f731a671079842116e0991c91c2c88645a.png",
+                "tv_大佬": "093c1e2c490161aca397afc45573c877cdead616.png",
+                "tv_大哭": "23269aeb35f99daee28dda129676f6e9ea87934f.png",
+                "tv_委屈": "d04dba7b5465779e9755d2ab6f0a897b9b33bb77.png",
+                "tv_害羞": "a37683fb5642fa3ddfc7f4e5525fd13e42a2bdb1.png",
+                "tv_尴尬": "7cfa62dafc59798a3d3fb262d421eeeff166cfa4.png",
+                "tv_微笑": "70dc5c7b56f93eb61bddba11e28fb1d18fddcd4c.png",
+                "tv_思考": "90cf159733e558137ed20aa04d09964436f618a1.png",
+                "tv_惊吓": "0d15c7e2ee58e935adc6a7193ee042388adc22af.png",
+                // ... 更多表情
+            },
+            enableQQ: {{ .Site.Params.valineEnableQQ }},
+            requiredFields: {{ .Site.Params.valineRequiredFields }}
+        });
+    }
+</script>

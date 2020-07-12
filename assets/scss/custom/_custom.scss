@@ -152,3 +152,66 @@ body {
     color: white;
     background: var(--mark-color);
 }
+
+// Styling Valine comments
+// emoji size
+#vcomments .vcontent .vemoji,
+.vpreview .vemoji {
+    max-width: 50px !important;
+}
+
+// content font size
+#vcomments .vcontent {
+    font-size: 0.9em !important;
+}
+
+// Header and input box font
+#vcomments .vnick,
+.vmail,
+.vlink,
+.vinput {
+    font-size: 0.9em !important;
+    font-family: var(--global-font-family) !important;
+}
+
+// submit button
+#vcomments .vsubmit.vbtn {
+    font-size: 0.9em !important;
+    font-family: var(--global-font-family) !important;
+    background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);
+}
+
+// background image
+#veditor {
+    background-image: url(https://i.loli.net/2020/07/12/ZumfKvr7swyWAi3.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    background-color: rgba(255, 255, 255, 0);
+    resize: vertical;
+}
+
+#veditor:focus{
+	background-position-y: 200px;
+	transition: all 0.2s ease-in-out 0s;
+}
+
+
+// Card comments
+#vcomments .vcards .vcard {
+	padding: 15px 20px 0 20px;
+	border-radius: 4px;
+    margin-bottom: 10px;
+    border: 1px solid #f0f0f0;
+	// box-shadow: 0 0 1px 1px rgba(0, 0, 0, .12);
+	transition: all .3s
+}
+
+#vcomments .vcards .vcard:hover {
+	box-shadow: 0 0 1px 1px rgba(0, 0, 0, .12)
+}
+
+#vcomments .vcards .vcard .vh .vcard {
+	border: none;
+	box-shadow: none;
+}
