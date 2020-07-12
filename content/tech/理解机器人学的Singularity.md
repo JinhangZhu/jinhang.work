@@ -9,7 +9,7 @@ slug: "robotics-singularity"
 Before understanding the `singularities` in robotics, we shall review:
 
 - What are `rotation matrices`?
-- What are `Euler angles`?
+- What are `Euler angles`?p
 
 I think these two points are the bases of the comprehension of `singularities`.
 
@@ -276,12 +276,8 @@ trans\rightarrow rot: \quad
 \end{aligned}
 \end{equation}\label{eq12}
 $$
-{% pullquote left %}
-
 不希望的结果是：
 绕自己几何中心以外位置的原点的旋转 （地球公转式） 和缩放。
-
-{% endpullquote %}
 
 可以看出先平移之后，表面上看旋转会让平移向量也发生旋转，实际上坐标系原点已经发生了变化，$^AR_B$ 本来定义就是绕着{A}{B}系的公共原点（或者处于同一空间位置的公共轴）进行旋转得到的旋转矩阵，**平移导致旋转轴不再重合**，原本的位置向量$^BP$ 相对于新坐标系相当于被改变了模长，这时的旋转矩阵即使作用了，也只是对${^BP}+^AP_{BORG}$ 作用，经过变换之后得到的位置向量和另一种顺序变换得到的不一样。
 
@@ -387,11 +383,7 @@ sin(\alpha + \gamma) & cos(\alpha +\gamma) & 0 \\\\
 \end{aligned}
 \end{equation}\label{eq15}
 $$
-{% pullquote left%}
-
 "This is exactly the same effective Gimbal lock causing two circular arms to rotate on the same plane"
-
-{% endpullquote %}
 
 此时说明，第二个旋转角为$90^\circ$时，**第三次旋转和第一次旋转是一样的效果**。$\gamma$角已经完成变换，$\beta$导致最后一次旋转变换，即$\alpha$角的转动，和$\gamma$角的转动**共旋转轴，少了一个自由度**。在上式中体现为两角变成整体的变量，无论$\alpha$不变，还是$\gamma$改变和$\gamma$不变，$\alpha$改变，结果会往同一中趋势改变。这种情况就是**奇点（singularity）**，一般发生在joints line up的时候，两个自由度产生重合。
 
