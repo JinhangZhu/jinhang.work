@@ -49,7 +49,7 @@ Reddy A. Chennakesava, Difference between Denavit-Hartenberg (DH) classical and 
 Note that the assumption does not involve any real loss of generality, since joints such as
 a ball and socket joint (two degrees-of-freedom) or a spherical wrist (three degrees-of-freedom) can always be thought of as a succession of single degree-of-freedom joints with links of length zero in between.
 
-![Rotary motion and linear motion](http://what-when-how.com/wp-content/uploads/2012/07/tmpc2f9321_thumb.png)
+![Rotary motion and linear motion](https://i.loli.net/2020/07/13/eUiFrHGgRtEoc7h.png)
 
 > To know more about joints, check: [To be finished]()
 
