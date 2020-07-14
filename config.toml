@@ -746,7 +746,7 @@ uglyURLs = false
     wordCountIcon = "pencil-alt"
 
     # 是否显示阅读时长
-    displayReadingTime = false
+    displayReadingTime = true
     # 阅读时长的图标
     readingTimeIcon = "clock"
 
@@ -1095,7 +1095,7 @@ uglyURLs = false
     shareOnTelegram = true
     shareOnWeibo = true
     shareOnDouban = true
-    # shareOnQQ = true
+    shareOnQQ = true
     # shareOnQzone = true
 
     shareViaQRCode = true
@@ -1194,7 +1194,7 @@ uglyURLs = false
     # 年份与作者之间的图标，留空（""）则无
     iconBetweenYearAndAuthor = "heart"
     # 图标颜色
-    iconColor = "#f06292"
+    iconColor = "#f06292" # #C0392B
     # 是否开启图标的跳动效果
     iconAnimation = true
 
