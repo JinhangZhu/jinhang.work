@@ -89,7 +89,145 @@ bc4login.acrc.bris.ac.uk
 
 ## 使用BC4
 
+官方文档：[ Blue Crystal Phase 4 User Documentation](https://www.acrc.bris.ac.uk/protected/bc4-docs/index.html)
 
+**了解BC4存储**：[Link](https://www.acrc.bris.ac.uk/protected/bc4-docs/storage/index.html#bluecrystal-phase-4-storage)。包含`Home Directories`和`Scratch Space`两种空间，前者是固定的20G，后者是512G，用于大型数据集的输入输出，后者路径为`/mnt/storage/scratch`。..这些控件都不会备份..。下面探索一下存储空间，会用到Linux命令[^3]（我当年怎么就没好好学呢），BC4的Linux shell默认是常见[^4]的Bash（在申请资格的时候选择）。
+
+[^3]:可以参考开源工作者撰写的《快乐的Linux命令行》- http://billie66.github.io/TLCL/
+[^4]:不懂shell别说你会linux - jay的文章 - 知乎 https://zhuanlan.zhihu.com/p/104729643
+
+---
+
+第一眼注意到的是shell提示符(shell prompt)，意为shell准备好了去接受命令的输入。
+
+```shell
+[lm19073@bc4login3 ~]$
+```
+
+不多废话，先走第一步， `Hello world!`。用到`echo`命令，首先使用命令帮助[^5]查看命令：
+
+[^5]:学会使用命令帮助 - https://linuxtools-rst.readthedocs.io/zh_CN/latest/base/01_use_man.html
+
+```shell
+[lm19073@bc4login3 ~]$ whatis echo
+echo (1)             - display a line of text
+echo (3x)            - curses input options
+```
+
+多的不说，尝试say hello：
+
+```shell
+[lm19073@bc4login3 ~]$ echo "Hello world!"
+-bash: !": event not found
+[lm19073@bc4login3 ~]$ echo 'Hello world!'
+Hello world!
+[lm19073@bc4login3 ~]$ echo Hello!
+Hello!
+[lm19073@bc4login3 ~]$ echo '$(date)'
+$(date)
+[lm19073@bc4login3 ~]$ echo "$(date)"
+“▒Tue Jul 14 20:17:27 BST 2020
+```
+
+入门成功！现在来看看一下文件系统。基础的三个命令是`pwd`，`ls`，`cd`，分别是Printing working directory, list (out), change directory。其中单纯的`cd`可以直接改回Home directory。
+
+```shell
+[lm19073@bc4login3 ~]$ pwd
+/mnt/storage/home/lm19073
+[lm19073@bc4login3 ~]$ ls
+Use  yolov3
+[lm19073@bc4login3 ~]$ cd yolov3
+[lm19073@bc4login3 yolov3]$ cd
+[lm19073@bc4login3 ~]$ pwd
+/mnt/storage/home/lm19073
+[lm19073@bc4login3 ~]$ cd yolov3
+[lm19073@bc4login3 yolov3]$ ls
+Dockerfile  README.md  data       models.py         test.py   tutorial.ipynb  weights
+LICENSE     cfg        detect.py  requirements.txt  train.py  utils
+[lm19073@bc4login3 yolov3]$ cd data
+[lm19073@bc4login3 data]$ pwd
+/mnt/storage/home/lm19073/yolov3/data
+[lm19073@bc4login3 data]$ cd ..
+[lm19073@bc4login3 yolov3]$ cd data
+[lm19073@bc4login3 data]$ cd
+[lm19073@bc4login3 ~]$ pwd
+/mnt/storage/home/lm19073
+```
+
+要是在我的Home directory再往前一级呢？好像发现了什么不得了的东西，原来大家的都是公开的？以后用`rm`命令可得注意了，公共场所别把人家的删了。
+
+> ![image-20200715001501009](https://i.loli.net/2020/07/15/szvkm1HBaMxRF6Z.png)
+
+```shell
+[lm19073@bc4login3 home]$ pwd
+/mnt/storage/home
+[lm19073@bc4login3 home]$ ls
+NOT.lm14358     cl14975.tar.gz    hs12248         madjl           rw15131.tar.gz
+UoB             cl15341           hs12828         marrk           rw15164
+aa16169         cl15540           hs14458         mb16066         rw15911
+...
+```
+
+现在检查一下我的存储容量：
+
+```shell
+[lm19073@bc4login3 ~]$ mmlsquota --block-size auto
+```
+
+![image-20200714203118026](https://i.loli.net/2020/07/15/o2kGhyQv6XupfrW.png)
+
+使用量在`blocks`一栏，总容量在`quota`一栏。根据文档，容量采用软限制，超量将`limit`一栏修改。所以大概就能猜到home 存储空间就是这样按照每个人的ID分开的，每个人的Home directory有20G可用，BC4会监控存储空间大小，一旦超过上限，是通过一个标志位控制是否还有资格继续储存文件。
+
+我需要在BC4上跑NN模型，那么源代码就存储在home directory里面儿，数据集ego-hand不过3G多，不会超过，所以是不用放在scratch space里面的，但是scratch space的设计就是给数据集的IO的，我猜应该把数据放那。然后在Shell中运行代码，调用scratch space的IO。如果说存储空间类型相似或者本身就是同一磁盘分区，我觉得IO读写速度应该不慢。
+
+既然Home directories是很多个用户所使用的，那么scratch space也应该是以用户分的，按照文档，我们进入scratch space看看有什么：
+
+```shell
+[lm19073@bc4login3 storage]$ cd scratch/
+[lm19073@bc4login3 scratch]$ ls
+YP19290         dw14986.tar.gz  jt17776         rb14427.tar.gz
+aa16169         dw16383.list    jt18607         rb16536
+...
+[lm19073@bc4login3 scratch]$ file lm19073/
+lm19073/: directory
+```
+
+确实如此，而且各自的空间基本都是以文件夹的形式存在。我的目录的长格式为：
+
+```shell
+drwxrwx---    2 lm19073 emat19t           4096 Jul  8 09:05 lm19073
+```
+
+![image-20200715001227772](https://i.loli.net/2020/07/15/ulcjqhLUzSCyNmH.png)
+
+```shell
+[lm19073@bc4login3 lm19073]$ pwd
+/mnt/storage/scratch/lm19073
+[lm19073@bc4login3 lm19073]$ cd
+[lm19073@bc4login3 ~]$ pwd
+/mnt/storage/home/lm19073
+```
+
+咱发现个什么问题呢？我们一般默认进入Home directory，但是Scratch space和Home directory的路径不一样，所以Linux就有一种叫做软链接的符号链接(symlink)让我们通过访问它来访问软链接指向的真正位置。按照文档的方法创建软链接：
+
+```shell
+[lm19073@bc4login3 ~]$ ln -s /mnt/storage/scratch/$USER scratch
+[lm19073@bc4login3 ~]$ ls
+Use  scratch  yolov3
+[lm19073@bc4login3 ~]$ ls -l
+total 0
+-rw-r--r-- 1 lm19073 emat19t    0 Jul 14 19:20 Use
+lrwxrwxrwx 1 lm19073 emat19t   28 Jul 15 00:23 scratch -> /mnt/storage/scratch/lm19073
+drwxr-xr-x 8 lm19073 emat19t 4096 Jul 14 19:34 yolov3
+```
+
+非常好！scratch这个软链接指向了我的独享的scratch space。这样的一个类似“指针”的操作有什么用呢？比如目标目录`/mnt/storage/scratch/lm19073`所属用户组`emat19t`经常对所管理的目录进行更新，把目录都用版本号来区别，而不是我现在的学号，这就很蛋疼了，每次访问目标目录还得去专门看一下版本号，然后敲出来，不如拿一个reference直接建立访问的桥梁。
+
+**模块信息**：[Link](https://www.acrc.bris.ac.uk/protected/bc4-docs/software/index.html)。我们可以用`module avail`来查看所有模块，`which <modulename>`查看模块位置等，了解了基本信息之后就可以跑代码了。
+
+(To be continued...)
+
+---
 
 ## References
 
