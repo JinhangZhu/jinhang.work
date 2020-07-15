@@ -91,7 +91,9 @@ bc4login.acrc.bris.ac.uk
 
 官方文档：[ Blue Crystal Phase 4 User Documentation](https://www.acrc.bris.ac.uk/protected/bc4-docs/index.html)
 
-**了解BC4存储**：[Link](https://www.acrc.bris.ac.uk/protected/bc4-docs/storage/index.html#bluecrystal-phase-4-storage)。包含`Home Directories`和`Scratch Space`两种空间，前者是固定的20G，后者是512G，用于大型数据集的输入输出，后者路径为`/mnt/storage/scratch`。..这些控件都不会备份..。下面探索一下存储空间，会用到Linux命令[^3]（我当年怎么就没好好学呢），BC4的Linux shell默认是常见[^4]的Bash（在申请资格的时候选择）。
+### 了解BC4存储
+
+[Link](https://www.acrc.bris.ac.uk/protected/bc4-docs/storage/index.html#bluecrystal-phase-4-storage)。包含`Home Directories`和`Scratch Space`两种空间，前者是固定的20G，后者是512G，用于大型数据集的输入输出，后者路径为`/mnt/storage/scratch`。..这些控件都不会备份..。下面探索一下存储空间，会用到Linux命令[^3]（我当年怎么就没好好学呢），BC4的Linux shell默认是常见[^4]的Bash（在申请资格的时候选择）。
 
 [^3]:可以参考开源工作者撰写的《快乐的Linux命令行》- http://billie66.github.io/TLCL/
 [^4]:不懂shell别说你会linux - jay的文章 - 知乎 https://zhuanlan.zhihu.com/p/104729643
@@ -223,9 +225,50 @@ drwxr-xr-x 8 lm19073 emat19t 4096 Jul 14 19:34 yolov3
 
 非常好！scratch这个软链接指向了我的独享的scratch space。这样的一个类似“指针”的操作有什么用呢？比如目标目录`/mnt/storage/scratch/lm19073`所属用户组`emat19t`经常对所管理的目录进行更新，把目录都用版本号来区别，而不是我现在的学号，这就很蛋疼了，每次访问目标目录还得去专门看一下版本号，然后敲出来，不如拿一个reference直接建立访问的桥梁。
 
-**模块信息**：[Link](https://www.acrc.bris.ac.uk/protected/bc4-docs/software/index.html)。我们可以用`module avail`来查看所有模块，`which <modulename>`查看模块位置等，了解了基本信息之后就可以跑代码了。
+### 模块信息
 
-(To be continued...)
+[Link](https://www.acrc.bris.ac.uk/protected/bc4-docs/software/index.html)。我们可以用`module avail`来查看所有模块，`which <modulename>`查看模块位置等，了解了基本信息之后就可以跑代码了。我重连之后发现上回创建的scratch软链接和本身之前clone的yolov3的repo文件夹都还在home目录下，说明这里的空间都可以保留文件（无备份）。
+
+```shell
+# 发现基本的模块都有，pip暂无
+[lm19073@bc4login3 ~]$ which python3
+/usr/bin/python3
+[lm19073@bc4login3 ~]$ which git
+/usr/bin/git
+[lm19073@bc4login3 ~]$ which pip
+/usr/bin/which: no pip in (/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/mnt/storage/home/lm19073/.dotnet/tools:/usr/lpp/mmfs/bin:/opt/ddn/ime/bin:/mnt/storage/home/lm19073/.local/bin:/mnt/storage/home/lm19073/bin)
+```
+
+我先把yolov3文件夹删掉，使用`rm -rf yolov3`命令。然后重新克隆yolov3：
+
+```shell
+[lm19073@bc4login3 ~]$ git clone https://github.com/ultralytics/yolov3
+Cloning into 'yolov3'...
+...
+```
+
+进入scratch space，将COCO2014下载在scratch space里：
+```shell
+[lm19073@bc4login3 scratch]$ bash /mnt/storage/home/lm19073/yolov3/data/get_coco2014.sh
+```
+
+![image-20200715134254844](https://i.loli.net/2020/07/15/5W9VHsBfdqNQAhC.png)
+
+> 这里使用的是脚本`.sh`，通过命令访问网络链接下载数据解压到服务器上。那么我们自己的数据怎么上传上去呢？新版文档没有说明，所以我参考了一个较老版本的文档[^6]，对于使用Windows的我来说，下载winSCP来管理文件流。
+
+[^6]: How to copy files to and from the cluster - ACRC: BlueCrystal User Guide - https://www.acrc.bris.ac.uk/acrc/pdf/bc-user-guide.pdf
+
+在作者的配置里coco和yolov3目录并列的，为了不修改运行代码的options，我们给`scratch/coco`设置一个和`yolov3`并列的软链接。
+
+<img src="https://i.loli.net/2020/07/16/tzomkrQAecIf5gB.png" alt="image-20200715192838567" title="纯属偶然发现不加软链接名字自动分配basename">
+
+选择运行：
+
+![image-20200715193247282](https://i.loli.net/2020/07/16/bD7SsRUzqOQIvNF.png)
+
+按照[issue](https://github.com/bastibe/transplant/issues/37#issuecomment-311269734)的说法，BC4的Python 3.4.5版本是导致syntax error的原因，需要≥3.5的版本。我尝试安装3.6版本开始出现提示是否想好，这属于调用管理员权限，我邮件问管理员。
+
+![image-20200715194703507](https://i.loli.net/2020/07/16/noVzMLbPiel8Tfr.png)
 
 ---
 
