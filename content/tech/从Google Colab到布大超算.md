@@ -7,10 +7,10 @@ tags: [Supercomputers]
 slug: "use-uob-supercomputers"
 toc: true
 displayCopyright: true
-dropCap: false
+dropCap: true
 ---
 
-在自己的Windows电脑上使用BlueCrystal Phase 4。
+Google Colab终究是一堆槽点，布大提供了超级计算机BlueCrystal Phase 4来服务研究人员的计算任务，本文就详细讲述如何在自己的电脑上使用这个珍贵资源。注：文章围绕Windows展开，不过差别不大，其他机型可以参考链接和引用解决。
 
 <!--more-->
 
@@ -20,8 +20,15 @@ Google Colab提供的GPU资源我在三到五月间用了几次，用来训练YO
 [^2]:https://github.com/JinhangZhu/project-diary/issues/8#issue-612799043
 
 - 允许一次持续使用免费GPU最多12小时。我最多一次用了8小时，虽说没达到12小时，但是我印象深刻，因为数据集再大一倍就不是8小时了，需要加上checkpoint让模型能在下一次免费的12小时内继续训练。
+
+  [Updated 2020.7.17]昨天到今天用Colab训练了自己的数据集，8000+的训练图片，同时也包括每一个epoch的验证，batch-size为8，一共100个迭代期，结果12个小时用完只训练到第19迭代期，这种时候可以采取一些小trick来解决[^trick]。
+
+  [^trick]:[使用pytorch时，训练集数据太多达到上千万张，Dataloader加载很慢怎么办?](https://www.zhihu.com/question/356829360)
+
 - GPU资源的运算能力并不是很大。就拿我用的[代码](https://github.com/ultralytics/yolov3)来说，作者采用的`batch-size`达到了16或者32，然而我的情况是8就是运算极限了，得继续缩小为4。
+
 - 挂载断开连接。这是一大坑，Colab可能因为各种原因disconnected，比如电脑自动休眠，窗口和鼠标长时间不活跃等。有一次不知道是因为反复重复连接GPU还是怎么的，Colab不让我连了，我只好换了个账号训练，有号任性。解决的办法也有，让电脑尽量插电不息屏，设置浏览器的js自动点击或者使用按键精灵。
+
 - 量大的文件位置得上传。我是上传到Drive然后在Colab里面开头mount Drive，为什么要这么麻烦呢？就是因为Colab的临时空间只有30多G，使用COCO的话先下载压缩包，20G没了，然后解压，解压过程是不能删压缩包的，所以存储必超。另一个问题就是即使数据集小能塞进临时空间，但是重连GPU之后临时空间会消失......网速慢的时候，这个问题会搞人。
 
 但是还是觉得Google很棒，能提供免费的GPU资源给学生党用。后来，RRP老师Richards在我的Research Plan里的关于使用Colab的risk分析处给了个评语：UoB HPC？我当时没搞明白他写啥也没去查，后来跟导师反映计算资源的时候直到了布大给的BlueCrystal Phase 4 (BC4)。直到今天申请的时候才知道就是HPC提供了BC4。布大的[HPC](http://uob-hpc.github.io/)拥有BlueCrystal超级计算机，BlueCrystal Phase 3 (BC3)和BC4都在2013年和2016年的[超算500强](http://www.top500.org/)里，今年没上榜但是要帮忙训练个模型不是绰绰有余？BC4有将近16,000核和64个NVIDIA P100 GPUs，运算速度能达到600万亿次。BC3适用于一般的单处理器和小型的并行运算，BC4就是用来做大型并行运算的，这些术语我并不是很在行，但是加上导师的推荐，想来训练大型CNN模型应该是要用BC4。
@@ -227,7 +234,11 @@ drwxr-xr-x 8 lm19073 emat19t 4096 Jul 14 19:34 yolov3
 
 ### 模块信息
 
-[Link](https://www.acrc.bris.ac.uk/protected/bc4-docs/software/index.html)。我们可以用`module avail`来查看所有模块，`which <modulename>`查看模块位置等，了解了基本信息之后就可以跑代码了。我重连之后发现上回创建的scratch软链接和本身之前clone的yolov3的repo文件夹都还在home目录下，说明这里的空间都可以保留文件（无备份）。
+[Link](https://www.acrc.bris.ac.uk/protected/bc4-docs/software/index.html)。我们可以用`module avail`来查看所有模块，`which <modulename>`查看模块位置等，了解了基本信息之后就可以跑代码了。
+
+### 配置舒服的环境
+
+我重连之后发现上回创建的scratch软链接和本身之前clone的yolov3的repo文件夹都还在home目录下，说明这里的空间都可以保留文件（无备份）。
 
 ```shell
 # 发现基本的模块都有，pip暂无
@@ -254,7 +265,7 @@ Cloning into 'yolov3'...
 
 ![image-20200715134254844](https://i.loli.net/2020/07/15/5W9VHsBfdqNQAhC.png)
 
-> 这里使用的是脚本`.sh`，通过命令访问网络链接下载数据解压到服务器上。那么我们自己的数据怎么上传上去呢？新版文档没有说明，所以我参考了一个较老版本的文档[^6]，对于使用Windows的我来说，下载winSCP来管理文件流。
+> 这里使用的是脚本`.sh`，通过命令访问网络链接下载数据解压到服务器上。那么<mark>我们自己的数据怎么上传上去呢？</mark>新版文档没有说明，所以我参考了一个较老版本的文档[^6]，对于使用Windows的我来说，下载**winSCP**来管理文件流。
 
 [^6]: How to copy files to and from the cluster - ACRC: BlueCrystal User Guide - https://www.acrc.bris.ac.uk/acrc/pdf/bc-user-guide.pdf
 
@@ -262,13 +273,94 @@ Cloning into 'yolov3'...
 
 <img src="https://i.loli.net/2020/07/16/tzomkrQAecIf5gB.png" alt="image-20200715192838567" title="纯属偶然发现不加软链接名字自动分配basename">
 
+现在环境都配置好了！如果有报错，就参考下一章节Issues来解决。一切就绪后，跑代码。
+
+```shell
+[lm19073@bc4login3 yolov3]$ python detect.py
+Namespace(agnostic_nms=False, augment=False, cfg='cfg/yolov3-spp.cfg', classes=None, conf_thres=0.3, device='', fourcc='mp4v', half=False, img_size=512, iou_thres=0.6, names='data/coco.names', output='output', save_txt=False, source='data/samples', view_img=False, weights='weights/yolov3-spp-ultralytics.pt')
+Using CPU
+
+Model Summary: 225 layers, 6.29987e+07 parameters, 6.29987e+07 gradients
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   408    0   408    0     0   1797      0 --:--:-- --:--:-- --:--:--  1789
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100  240M    0  240M    0     0  38.9M      0 --:--:--  0:00:06 --:--:-- 51.7M
+Downloading https://drive.google.com/uc?export=download&id=1UcR-zVoMs7DH5dj3N1bswkiQTA4dmKF4 as weights/yolov3-spp-ultralytics.pt... Done (6.7s)
+image 1/2 data/samples/bus.jpg: 512x384 3 persons, 1 buss, 1 ties, Done. (0.583s)
+image 2/2 data/samples/zidane.jpg: 320x512 2 persons, 1 ties, Done. (0.538s)
+Results saved to /mnt/storage/home/lm19073/yolov3/output
+Done. (1.261s)
+```
+
+就这两张图片，BC4用时1.261秒，而相同的运算Colab上用时1.616秒，已经快了20%，所以在长时间的训练任务上，BC4应该更加占优势。不过一个无法避免的问题是，连接到服务器所需要的VPN最大时长也是12小时，所以该做的备份工作还是要做好，如checkpoint的储存，results的写入等。
+
+## Issues
+
+### Python版本问题
+
 选择运行：
 
 ![image-20200715193247282](https://i.loli.net/2020/07/16/bD7SsRUzqOQIvNF.png)
 
-按照[issue](https://github.com/bastibe/transplant/issues/37#issuecomment-311269734)的说法，BC4的Python 3.4.5版本是导致syntax error的原因，需要≥3.5的版本。我尝试安装3.6版本开始出现提示是否想好，这属于调用管理员权限，我邮件问管理员。
+按照[issue](https://github.com/bastibe/transplant/issues/37#issuecomment-311269734)的说法，BC4的Python 3.4.5版本是导致syntax error的原因，需要≥3.5的版本。采用`module avail`能发现系统中安装有Anaconda，Anaconda中包含多个不同版本的Python，3.7版本够用，就选择它load到module list中来，之后的python命令就自动调用的是3.7版本的Python了。操作如下：
 
-![image-20200715194703507](https://i.loli.net/2020/07/16/noVzMLbPiel8Tfr.png)
+```shell
+[lm19073@bc4login2 ~]$ module avail
+
+--------------------- /mnt/storage/easybuild/modules/local ---------------------
+ ...
+ languages/anaconda3/3.6.5
+ languages/anaconda3/3.7
+ ...
+[lm19073@bc4login2 ~]$ module load languages/anaconda3/3.7
+[lm19073@bc4login2 ~]$ module list
+
+Currently Loaded Modules:
+  1) languages/java/sdk-1.8.0.141   2) languages/anaconda3/3.7
+[lm19073@bc4login2 ~]$ python --version
+Python 3.7.4
+```
+### libstdc++问题
+
+![image-20200716135338142](https://i.loli.net/2020/07/16/zfTYo9PZaeAwFjH.png)
+
+1. 一种可能是libstdc++.so.6没有指向新版本而是6.0.19版本，需要手动解除软链接并创建新软链接，见[CXXABI_1.3.9 not included in libstdc++.so.6](https://github.com/ContinuumIO/anaconda-issues/issues/5191#)#5191。
+
+   进入libstdc++所在目录`/usr/lib/`，检查长格式软链接，
+
+   ```shell
+   [lm19073@bc4login2 lib64]$ pwd
+   /usr/lib64
+   [lm19073@bc4login2 lib64]$ ls libstdc++.so.6 -l
+   lrwxrwxrwx 1 root root 19 Mar 21  2017 libstdc++.so.6 -> libstdc++.so.6.0.19
+   ```
+
+   需要把这个删掉然后重定义指向下面的地址，不过需要管理员的权限...只要是不乏通过自己的权限解决的办法，<mark>不推荐</mark>。
+
+   ```shell
+   /mnt/storage/software/languages/anaconda/Anaconda3-2019-3.7/lib/libstdc++.so.6.0.26
+   ```
+
+2. 第二种方法是一类方法，就是看是导入什么package的时候出现的error，然后针对性地重装或者更新，见：[Link](https://github.com/widdowquinn/pyani/issues/96#issuecomment-337157574)。依然需要管理员权限，<mark>不推荐</mark>。
+
+3. 第三种方法是最有针对性的，<mark>推荐</mark>.分析得知这个问题的原因是我们导入的Anaconda的Python模块并没有调用适配的自己的库文件，而是调用了系统的库文件，这两个目录下的`libstdc++`有什么区别呢？是版本的区别。
+
+   ```shell
+   [lm19073@bc4login3 yolov3]$ ls /mnt/storage/software/languages/anaconda/Anaconda3-2019-3.7/lib/libstdc++.so.6 -l
+   lrwxrwxrwx 1 root root 19 Dec  5  2019 /mnt/storage/software/languages/anaconda/Anaconda3-2019-3.7/lib/libstdc++.so.6 -> libstdc++.so.6.0.26
+   [lm19073@bc4login3 yolov3]$ ls /usr/lib64/libstdc++.so.6 -l
+   lrwxrwxrwx 1 root root 19 Mar 21  2017 /usr/lib64/libstdc++.so.6 -> libstdc++.so.6.0.19
+   ```
+
+   解决办法[^lib]就是让Anaconda调用自己的lib：将Anaconda的lib目录写入动态链接库(DLL)环境变量：
+
+   [^lib]:[matplotlib导入错误](https://blog.csdn.net/qq_36501182/article/details/102969174)
+
+   ```shell
+   export LD_LIBRARY_PATH=/mnt/storage/software/languages/anaconda/Anaconda3-2019-3.7/lib:$LD_LIBRARY_PATH
+   ```
 
 ---
 

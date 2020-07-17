@@ -4,9 +4,33 @@ date: 2020-06-17T16:00:40+01:00
 draft: false
 ---
 
-This page contains my reviews of the papers about object detection. Links of the reviews, links of the papers, brief summaries, links of implementations are provided. <!--more-->
+本页包含内容：读论文总结，论文链接，论文/算法简要概括，代码实现链接等。有关目标检测更详尽的汇总： [Object Detection - handong1587](https://handong1587.github.io/deep_learning/2015/10/09/object-detection.html#non-maximum-suppression-nms)
 
-> Explicit collection of object detection papers: [Object Detection - handong1587](https://handong1587.github.io/deep_learning/2015/10/09/object-detection.html#non-maximum-suppression-nms)
+目标检测就是在给定的图片里找到物体的位置，并且标注它们的类别，所以需要解决的问题就是：物体在哪里和物体是什么。目前主流的目标检测算法分为三类：
+
+<img src="https://i.loli.net/2020/07/17/jh2MNsnJHTIySFQ.png" title="Object Detection in 20 Years: A Survey">
+
+1. 传统的目标检测算法，如滑窗+AdaBoost+Cascade，Cascade+HoG/DPM+SVM等变体；
+
+2. 两阶段的候选框提取+分类的算法，首先提取出候选区域ROI，然后对它们进行深度学习方法为主的分类，如R-CNN, SPP-Net, Fast R-CNN, Faster R-CNN, R-FCN等。
+
+   | 算法         | 主要组成                     | 备注                                                         |
+   | ------------ | ---------------------------- | ------------------------------------------------------------ |
+   | R-CNN        | Selective search + CNN + SVM | [Paper](https://arxiv.org/abs/1311.2524)\|[Code](https://github.com/rbgirshick/rcnn) |
+   | SPP-Net      | ROI Pooling                  |                                                              |
+   | Fast R-CNN   | Selective search + CNN + ROI |                                                              |
+   | Faster R-CNN | RPN + CNN + ROI              |                                                              |
+   | R-FCN        |                              |                                                              |
+
+3. 一阶段的基于深度学习的回归方法，将候选框位置以及候选框的类别当作回归问题来解决，如YOLO/SSD/DenseBox等。
+
+   | 算法     | 主要组成                         | 备注 |
+   | -------- | -------------------------------- | ---- |
+   | YOLO     | Anchor boxes, YOLO-loss function |      |
+   | SSD      |                                  |      |
+   | DenseBox |                                  |      |
+
+   
 
 ---
 
@@ -178,7 +202,7 @@ In general, this paper made two contributions in hand detection domain.
 
 
 
-> - Review: [Review: Hand detection using multiple proposals](../review-hand-detection-using-multiple-proposals)
+> - Review: [Review: Hand detection using multiple proposals](../tech/review-hand-detection-using-multiple-proposals)
 > - Paper: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.301.3602&rep=rep1&type=pdf
 
 <a id="markdown-dl-based-two-stage-object-detection" name="dl-based-two-stage-object-detection"></a>
@@ -217,7 +241,7 @@ In general, this paper made two contributions in hand detection domain.
 - Network architecture.
 - Design of the loss function.
 
-> - Review: [Review: You only look once (YOLOv1)](../review-yolo/)
+> - Review: [Review: You only look once (YOLOv1)](../tech/review-yolo/)
 > - Paper:  https://arxiv.org/abs/1506.02640
 
 <a id="markdown-yolov2" name="yolov2"></a>
@@ -236,7 +260,7 @@ Another contribution is that they used a new dataset combination method and join
 
 ![Results on COCO test-dev2015. From single shot multibox detector](https://i.loli.net/2020/03/29/T3GFbEIBxswPRhl.png)
 
->- Review: [Review: YOLOv2](../review-yolov2/)
+>- Review: [Review: YOLOv2](../tech/review-yolov2/)
 >- Paper: https://arxiv.org/abs/1612.08242
 >- Official implementation: https://pjreddie.com/darknet/yolov2/
 
@@ -250,7 +274,7 @@ We present some updates to YOLO! We made a bunch of little design changes to mak
 
 ![APs on COCO.png](https://i.loli.net/2020/04/27/OqriEcIvLodsU3j.png)
 
-> - Review: [Review: YOLOv3](../review-yolov3/)
+> - Review: [Review: YOLOv3](../tech/review-yolov3/)
 > - [yolo系列之yolo v3【深度解析】](https://blog.csdn.net/leviopku/article/details/82660381)巩固细节
 > - Paper: https://arxiv.org/abs/1804.02767
 > - Official implementation: https://pjreddie.com/darknet/yolo/
@@ -294,7 +318,7 @@ We present some updates to YOLO! We made a bunch of little design changes to mak
 
 ### MTCNN
 
-> -  Review: [Review-MTCNN](../review-mtcnn/)
+> -  Review: [Review-MTCNN](../tech/review-mtcnn/)
 > -  [open-face](https://github.com/open-face)/**[mtcnn](https://github.com/open-face/mtcnn)** 各种实现汇总
 > -  **[MTCNN_face_detection_alignment](https://github.com/kpzhang93/MTCNN_face_detection_alignment)** 作者论文代码 | Caffe & Matlab
 > -  [mtcnn-pytorch](https://github.com/TropComplique/mtcnn-pytorch) Python & PyTorch | 只有inference
