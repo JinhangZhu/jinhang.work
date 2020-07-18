@@ -21,7 +21,7 @@ Google Colab提供的GPU资源我在三到五月间用了几次，用来训练YO
 
 - 允许一次持续使用免费GPU最多12小时。我最多一次用了8小时，虽说没达到12小时，但是我印象深刻，因为数据集再大一倍就不是8小时了，需要加上checkpoint让模型能在下一次免费的12小时内继续训练。
 
-  [Updated 2020.7.17]昨天到今天用Colab训练了自己的数据集，8000+的训练图片，同时也包括每一个epoch的验证，batch-size为8，一共100个迭代期，结果12个小时用完只训练到第19迭代期，这种时候可以采取一些小trick来解决[^trick]。
+  <span class="update-phrase">[Updated 2020.7.17]</span>昨天到今天用Colab训练了自己的数据集，8000+的训练图片，同时也包括每一个epoch的验证，batch-size为8，一共100个迭代期，结果12个小时用完只训练到第19迭代期，这种时候可以采取一些小trick来解决[^trick]。
 
   [^trick]:[使用pytorch时，训练集数据太多达到上千万张，Dataloader加载很慢怎么办?](https://www.zhihu.com/question/356829360)
 
@@ -44,15 +44,19 @@ Google Colab提供的GPU资源我在三到五月间用了几次，用来训练YO
 
 下面就介绍一下布大做项目的学生如何申请资格用上曾经的超算500强。
 
+**注：带`*`号的目录必看或者必须参考配置。**
+
 ## 配置连接
 
 ### 申请资格
 
 首先在 https://www.acrc.bris.ac.uk/acrc/phase4.htm 网页看看大致的介绍，左侧菜单有Application Form，申请表除了需要基本学生个人信息外，还需要Project Code，这个需要找导师要。填好提交后等待消息。邮件回复开通资格后，就可以进行下面的步骤了。
 
-### 安装VPN
+### VPN
 
 N.B. 如果是在校园网Eduroam环境下使用电脑，不需要配置VPN。
+
+<span class="update-phrase">[Updated 2020.7.18]</span>使用VPN连接也有固定时限12小时。诶你可能会问：那和我用Colab没差呀？实践证明，相同代码和数据运行，BC4更快。
 
 https://www.bris.ac.uk/it-services/advice/homeusers/uobonly/uobvpn
 
@@ -68,15 +72,17 @@ https://www.bris.ac.uk/it-services/advice/homeusers/uobonly/uobvpn
 
 ![image-20200708105550613](https://i.loli.net/2020/07/08/OwpYU6QyMCHGTos.png)
 
-### 配置远程桌面环境
+### 远程桌面环境
 
 N.B. 如果是在校园网Eduroam环境下使用电脑，不需要配置远程桌面环境。
+
+<span class="update-phrase">[Updated 2020.7.18]</span>暂时没看出Remote Desktop Connection有时长限制。
 
 http://www.bristol.ac.uk/it-services/advice/homeusers/remote/studentdesktop
 
 一般来说选择第一中connection下载，点击之后输入UoB的账号密码就可以连接上UoB的桌面了。
 
-### 安装PuTTY
+### *PuTTY
 
 N.B. 如果是在远程桌面环境下，不需要安装PuTTY。
 
@@ -298,7 +304,7 @@ Done. (1.261s)
 
 ## Issues
 
-### Python版本问题
+### *Python版本问题
 
 选择运行：
 
@@ -322,7 +328,7 @@ Currently Loaded Modules:
 [lm19073@bc4login2 ~]$ python --version
 Python 3.7.4
 ```
-### libstdc++问题
+### *libstdc++问题
 
 ![image-20200716135338142](https://i.loli.net/2020/07/16/zfTYo9PZaeAwFjH.png)
 

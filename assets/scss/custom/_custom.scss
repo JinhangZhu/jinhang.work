@@ -191,27 +191,34 @@ body {
     resize: vertical;
 }
 
-#veditor:focus{
-	background-position-y: 200px;
-	transition: all 0.2s ease-in-out 0s;
+#veditor:focus {
+    background-position-y: 200px;
+    transition: all 0.2s ease-in-out 0s;
 }
-
 
 // Card comments
 #vcomments .vcards .vcard {
-	padding: 15px 20px 0 20px;
-	border-radius: 4px;
+    padding: 15px 20px 0 20px;
+    border-radius: 4px;
     margin-bottom: 10px;
     border: 1px solid #f0f0f0;
-	// box-shadow: 0 0 1px 1px rgba(0, 0, 0, .12);
-	transition: all .3s
+    // box-shadow: 0 0 1px 1px rgba(0, 0, 0, .12);
+    transition: all 0.3s;
 }
 
 #vcomments .vcards .vcard:hover {
-	box-shadow: 0 0 1px 1px rgba(0, 0, 0, .12)
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.12);
 }
 
 #vcomments .vcards .vcard .vh .vcard {
-	border: none;
-	box-shadow: none;
+    border: none;
+    box-shadow: none;
+}
+
+// Updated phrases
+
+.update-phrase {
+    font-family: "Source Code Pro", "Noto Serif SC", monospace;
+    color: #1f7efa;
+    margin-right: 1pt;
 }
