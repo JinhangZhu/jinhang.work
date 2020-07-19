@@ -44,7 +44,7 @@ Google Colab提供的GPU资源我在三到五月间用了几次，用来训练YO
 
 下面就介绍一下布大做项目的学生如何申请资格用上曾经的超算500强。
 
-**注：带`*`号的目录必看或者必须参考配置。**
+**注：1. 带`*`号的目录必看或者必须参考配置。2. 用VPN来使用BC4训练的时候不要开其他占用网络的。**
 
 ## 配置连接
 
@@ -76,7 +76,7 @@ https://www.bris.ac.uk/it-services/advice/homeusers/uobonly/uobvpn
 
 N.B. 如果是在校园网Eduroam环境下使用电脑，不需要配置远程桌面环境。
 
-<span class="update-phrase">[Updated 2020.7.18]</span>暂时没看出Remote Desktop Connection有时长限制。
+<span class="update-phrase">[Updated 2020.7.18]</span>在运行过程中我处于睡觉状态，早上起来发现窗口都关了，连一个新的迭代期都没训练成，我猜应该是有时限而且很短的。
 
 http://www.bristol.ac.uk/it-services/advice/homeusers/remote/studentdesktop
 
@@ -85,6 +85,8 @@ http://www.bristol.ac.uk/it-services/advice/homeusers/remote/studentdesktop
 ### *PuTTY
 
 N.B. 如果是在远程桌面环境下，不需要安装PuTTY。
+
+<span class="update-phrase">[Updated 2020.7.18]</span>PyTTY有个糟糕的问题：容易掉线...所以就得常常盯着它然后等掉线再重启。
 
 https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html，直接选择64-bit的`msi`文件下载安装。
 

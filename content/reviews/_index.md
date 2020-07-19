@@ -16,7 +16,7 @@ draft: false
 
    | 算法         | 主要组成                     | 备注                                                         |
    | ------------ | ---------------------------- | ------------------------------------------------------------ |
-   | R-CNN        | Selective search + CNN + SVM | [Paper](https://arxiv.org/abs/1311.2524)\|[Code](https://github.com/rbgirshick/rcnn) |
+   | R-CNN        | Selective search + CNN + SVM | [Paper](https://arxiv.org/abs/1311.2524) \| [Code](https://github.com/rbgirshick/rcnn) |
    | SPP-Net      | ROI Pooling                  |                                                              |
    | Fast R-CNN   | Selective search + CNN + ROI |                                                              |
    | Faster R-CNN | RPN + CNN + ROI              |                                                              |
