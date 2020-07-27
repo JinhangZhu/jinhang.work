@@ -17,18 +17,18 @@ draft: false
    | 算法         | 主要组成                     | 备注                                                         |
    | ------------ | ---------------------------- | ------------------------------------------------------------ |
    | R-CNN        | Selective search + CNN + SVM | [Paper](https://arxiv.org/abs/1311.2524) \| [Code](https://github.com/rbgirshick/rcnn) |
-   | SPP-Net      | ROI Pooling                  |                                                              |
-   | Fast R-CNN   | Selective search + CNN + ROI |                                                              |
-   | Faster R-CNN | RPN + CNN + ROI              |                                                              |
-   | R-FCN        |                              |                                                              |
+   | SPP-Net      | ROI Pooling                  | Paper \| Code                                                |
+   | Fast R-CNN   | Selective search + CNN + ROI | Paper \| Code                                                |
+   | Faster R-CNN | RPN + CNN + ROI              | Paper \| Code                                                |
+   | R-FCN        |                              | Paper \| Code                                                |
 
 3. 一阶段的基于深度学习的回归方法，将候选框位置以及候选框的类别当作回归问题来解决，如YOLO/SSD/DenseBox等。
 
-   | 算法     | 主要组成                         | 备注 |
-   | -------- | -------------------------------- | ---- |
-   | YOLO     | Anchor boxes, YOLO-loss function |      |
-   | SSD      |                                  |      |
-   | DenseBox |                                  |      |
+   | 算法     | 主要组成                         | 备注                                                         |
+   | -------- | -------------------------------- | ------------------------------------------------------------ |
+   | YOLO     | Anchor boxes, YOLO-loss function | [Paper(v3)](https://arxiv.org/abs/1804.02767) \| [Code](https://github.com/pjreddie/darknet) |
+   | SSD      |                                  | Paper \| Code                                                |
+   | DenseBox |                                  | Paper \| Code                                                |
 
    
 
@@ -74,19 +74,19 @@ draft: false
 ---
 
 
-<a id="markdown-basic-knowledge-in-deep-learning" name="basic-knowledge-in-deep-learning"></a>
 
+<a id="markdown-basic-knowledge-in-deep-learning" name="basic-knowledge-in-deep-learning"></a>
 ## Basic knowledge in Deep Learning
 
-<a id="markdown-metrics" name="metrics"></a>
 
+<a id="markdown-metrics" name="metrics"></a>
 ### Metrics
 
 > - [分类模型评估指标——准确率、精准率、召回率、F1、ROC曲线、AUC曲线](https://easyai.tech/ai-definition/accuracy-precision-recall-f1-roc-auc/)
 > - [Let's evaluate classification model with ROC and PR curves](https://www.linkedin.com/pulse/lets-evaluate-classification-model-roc-pr-curves-suravi-mahanta/)
 
-<a id="markdown-confusion-matrix" name="confusion-matrix"></a>
 
+<a id="markdown-confusion-matrix" name="confusion-matrix"></a>
 #### Confusion matrix
 
 <center>
@@ -109,8 +109,8 @@ N.B.
 > - *Python* [sklearn.metrics](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.metrics)
 
 
-<a id="markdown-iou" name="iou"></a>
 
+<a id="markdown-iou" name="iou"></a>
 #### IoU
 
 The rate of intersection over union between the predicted bounding box and the ground truth bounding box. WHY? To measure how accurate is the object identified in the image and to decide whether to consider the object as a true positive or a false positive. A general threshold for IoU can be 0.5.
@@ -124,8 +124,8 @@ $$
 >
 > - *Takes bbox coords* [bbox_iou()](https://github.com/JinhangZhu/yolov3-from-scratch/blob/d7b82df4ff64c37fb309d6d311acba4896a9e571/util.py#L32)
 
-<a id="markdown-map" name="map"></a>
 
+<a id="markdown-map" name="map"></a>
 #### mAP
 
 **Average Precision (AP)** computes the average precision for recall rate over 0 to 1. The general definition for the AP is the AUC of PR curve. $AP=\int^1_0 p(r)dr$.
@@ -146,21 +146,26 @@ $$
 > - *Official* [Detection evaluation](http://cocodataset.org/#detection-eval)
 > - *GitHub Repo for eval* [Cartucho](https://github.com/Cartucho)/**[mAP](https://github.com/Cartucho/mAP)**
 
-<a id="markdown-non-maximum-suppression" name="non-maximum-suppression"></a>
 
+<a id="markdown-non-maximum-suppression" name="non-maximum-suppression"></a>
 ### Non Maximum Suppression
 
-<img src="https://miro.medium.com/max/1400/1*CuqLjro26cHShpQVO1rgdQ.png" alt="Pseudo code of NMS" style="zoom: 67%;" class="center"/>
+<img src="https://miro.medium.com/max/1400/1*CuqLjro26cHShpQVO1rgdQ.png" title="Hard NMS">
 
-> - *YOLOv3 implementation* [NMS in YOLOv3](https://github.com/JinhangZhu/yolov3-from-scratch/blob/d7b82df4ff64c37fb309d6d311acba4896a9e571/util.py#L251)
-> - *Explicit* [Non-maximum Suppression (NMS)](https://towardsdatascience.com/non-maximum-suppression-nms-93ce178e177c)
+<img src="https://i.loli.net/2020/07/27/LK7ZsQrVcTlb4M3.png" title="Hard and Soft NMS">
+
+| Materials       | Links                                                        |
+| --------------- | ------------------------------------------------------------ |
+| Paper           | [soft-NMS](https://arxiv.org/pdf/1704.04503.pdf)             |
+| Posts           | [重在区别的中文博客](https://www.cnblogs.com/PythonLearner/p/13358417.html) \| [Easy-to-understand EN post](https://towardsdatascience.com/non-maximum-suppression-nms-93ce178e177c) |
+| Implementations | [Soft-NMS](https://github.com/DocF/Soft-NMS) \| [Hard-NMS](https://github.com/JinhangZhu/yolov3-from-scratch/blob/d7b82df4ff64c37fb309d6d311acba4896a9e571/util.py#L251) \| [Hard and Soft NMS](https://www.cnblogs.com/PythonLearner/p/13358417.html) |
+
 
 <a id="markdown-dataset-and-splits" name="dataset-and-splits"></a>
-
 ### Dataset and splits
 
-<a id="markdown-datasets" name="datasets"></a>
 
+<a id="markdown-datasets" name="datasets"></a>
 #### Datasets
 
 - **Training dataset**: Consisted of the samples of data used to fit the model. The model *learns* from the training set to tune weights and biases.
@@ -169,30 +174,30 @@ $$
 
 > - *Just reference*[About Train, Validation and Test Sets in Machine Learning](https://towardsdatascience.com/train-validation-and-test-sets-72cb40cba9e7)
 
-<a id="markdown-splits-and-validation-methods" name="splits-and-validation-methods"></a>
 
+<a id="markdown-splits-and-validation-methods" name="splits-and-validation-methods"></a>
 #### Splits and validation methods
 
 > - *Formulae* [【机器学习】Cross-Validation（交叉验证）详解](https://zhuanlan.zhihu.com/p/24825503)
 > - *Including codes* [机器学习面试题集 - 详解四种交叉验证方法](https://www.jianshu.com/p/5b793f9b6481)
 > - *Including cases* [训练集、验证集、测试集（附：分割方法+交叉验证）](https://easyai.tech/ai-definition/3dataset-and-cross-validation/)
 
-<a id="markdown-tips-for-coding" name="tips-for-coding"></a>
 
+<a id="markdown-tips-for-coding" name="tips-for-coding"></a>
 ### Tips for coding
 
-<a id="markdown-random-seed-for-reproduction" name="random-seed-for-reproduction"></a>
 
+<a id="markdown-random-seed-for-reproduction" name="random-seed-for-reproduction"></a>
 #### Random seed for reproduction
 
 > - [Pytorch随机种子](https://www.zdaiot.com/MLFrameworks/Pytorch/Pytorch%E9%9A%8F%E6%9C%BA%E7%A7%8D%E5%AD%90/)
 
-<a id="markdown-traditional-computer-vision-based" name="traditional-computer-vision-based"></a>
 
+<a id="markdown-traditional-computer-vision-based" name="traditional-computer-vision-based"></a>
 ## Traditional computer vision based
 
-<a id="markdown-hand-detection-using-multiple-proposals" name="hand-detection-using-multiple-proposals"></a>
 
+<a id="markdown-hand-detection-using-multiple-proposals" name="hand-detection-using-multiple-proposals"></a>
 ### Hand detection using multiple proposals
 
 In general, this paper made two contributions in hand detection domain.
@@ -205,34 +210,34 @@ In general, this paper made two contributions in hand detection domain.
 > - Review: [Review: Hand detection using multiple proposals](../tech/review-hand-detection-using-multiple-proposals)
 > - Paper: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.301.3602&rep=rep1&type=pdf
 
-<a id="markdown-dl-based-two-stage-object-detection" name="dl-based-two-stage-object-detection"></a>
 
+<a id="markdown-dl-based-two-stage-object-detection" name="dl-based-two-stage-object-detection"></a>
 ## DL-based Two-Stage Object Detection
 
-<a id="markdown-r-cnn" name="r-cnn"></a>
 
+<a id="markdown-r-cnn" name="r-cnn"></a>
 ### R-CNN
 
 
 
-<a id="markdown-fast-r-cnn" name="fast-r-cnn"></a>
 
+<a id="markdown-fast-r-cnn" name="fast-r-cnn"></a>
 ### Fast R-CNN
 
 
 
-<a id="markdown-faster-r-cnn" name="faster-r-cnn"></a>
 
+<a id="markdown-faster-r-cnn" name="faster-r-cnn"></a>
 ### Faster R-CNN
 
 
 
-<a id="markdown-dl-based-single-shot-object-detection" name="dl-based-single-shot-object-detection"></a>
 
+<a id="markdown-dl-based-single-shot-object-detection" name="dl-based-single-shot-object-detection"></a>
 ## DL-based Single-Shot Object Detection
 
-<a id="markdown-yolo" name="yolo"></a>
 
+<a id="markdown-yolo" name="yolo"></a>
 ### YOLO
 
 **Summary**:
@@ -244,8 +249,8 @@ In general, this paper made two contributions in hand detection domain.
 > - Review: [Review: You only look once (YOLOv1)](../tech/review-yolo/)
 > - Paper:  https://arxiv.org/abs/1506.02640
 
-<a id="markdown-yolov2" name="yolov2"></a>
 
+<a id="markdown-yolov2" name="yolov2"></a>
 ### YOLOv2
 
 **Summary**:
@@ -264,8 +269,8 @@ Another contribution is that they used a new dataset combination method and join
 >- Paper: https://arxiv.org/abs/1612.08242
 >- Official implementation: https://pjreddie.com/darknet/yolov2/
 
-<a id="markdown-yolov3" name="yolov3"></a>
 
+<a id="markdown-yolov3" name="yolov3"></a>
 ### YOLOv3
 
 **Abstract**:
@@ -288,24 +293,24 @@ We present some updates to YOLO! We made a bunch of little design changes to mak
 >
 >   - [DeNA](https://github.com/DeNA)/[PyTorch_YOLOv3](https://github.com/DeNA/PyTorch_YOLOv3)(good [articles](https://medium.com/@hirotoschwert/reproducing-training-performance-of-yolov3-in-pytorch-part1-620140ad71d3))
 
-<a id="markdown-yolov4" name="yolov4"></a>
 
+<a id="markdown-yolov4" name="yolov4"></a>
 ### YOLOv4
 
 ![AP@.50:.95](https://user-images.githubusercontent.com/4096485/80213782-5f1e3480-8642-11ea-8fdf-0e6b9a6b5f4c.png)
 
-<a id="markdown-ssd" name="ssd"></a>
 
+<a id="markdown-ssd" name="ssd"></a>
 ### SSD
 
 > - [目标检测|SSD原理与实现](https://zhuanlan.zhihu.com/p/33544892)
 
-<a id="markdown-face-detection" name="face-detection"></a>
 
+<a id="markdown-face-detection" name="face-detection"></a>
 ## Face detection
 
-<a id="markdown-viola-jones-methods" name="viola-jones-methods"></a>
 
+<a id="markdown-viola-jones-methods" name="viola-jones-methods"></a>
 ### Viola-Jones methods
 
 - 级联的脸部检测器，使用Haar-like features和AdaBoost来训练分类器
@@ -314,8 +319,8 @@ We present some updates to YOLO! We made a bunch of little design changes to mak
 
 > Paper: [Robust real-time face detection](https://idp.springer.com/authorize/casa?redirect_uri=https://link.springer.com/article/10.1023/B:VISI.0000013087.49260.fb&casa_token=qBL1H0PEVr8AAAAA:NjS4bWwbIESf3eFkiC073RiFBu8kogd5jUBSx1oCJ090k2eRaSrArV6DBIBcsbV43ODwm3jQ3-t2wcM)
 
-<a id="markdown-mtcnn" name="mtcnn"></a>
 
+<a id="markdown-mtcnn" name="mtcnn"></a>
 ### MTCNN
 
 > -  Review: [Review-MTCNN](../tech/review-mtcnn/)
@@ -326,24 +331,24 @@ We present some updates to YOLO! We made a bunch of little design changes to mak
 > -  [mxnet_mtcnn_face_detection](https://github.com/YYuanAnyVision/mxnet_mtcnn_face_detection) Python & mxnet
 > -  https://github.com/davidsandberg/facenet/blob/master/src/align/detect_face.py 被经常调用的tf版
 
-<a id="markdown-face-alignment" name="face-alignment"></a>
 
+<a id="markdown-face-alignment" name="face-alignment"></a>
 ## Face alignment
 
-<a id="markdown-regression-based" name="regression-based"></a>
 
+<a id="markdown-regression-based" name="regression-based"></a>
 ### Regression-based
 
 
 
-<a id="markdown-template-fitting" name="template-fitting"></a>
 
+<a id="markdown-template-fitting" name="template-fitting"></a>
 ### Template fitting
 
 
 
-<a id="markdown-ohem" name="ohem"></a>
 
+<a id="markdown-ohem" name="ohem"></a>
 ## OHEM
 
 > - Paper: [Training Region-based Object Detectors with Online Hard Example Mining](https://arxiv.org/abs/1604.03540) 
@@ -351,14 +356,14 @@ We present some updates to YOLO! We made a bunch of little design changes to mak
 > - [深度学习难分样本挖掘（Hard Mining）](https://zhuanlan.zhihu.com/p/51708428)- 知乎文章。
 > - [深度学习不可忽略之OHEM:Online Hard Example Mining](https://zhuanlan.zhihu.com/p/59002127) - 知乎文章。
 
-<a id="markdown-tools" name="tools"></a>
 
+<a id="markdown-tools" name="tools"></a>
 ## Tools
 
 > [史上最全神经网络结构图画图工具介绍，没有之一！](https://zhuanlan.zhihu.com/p/31920000)
 
-<a id="markdown-netron" name="netron"></a>
 
+<a id="markdown-netron" name="netron"></a>
 ### Netron
 
 https://github.com/lutzroeder/netron，画神经网络结构图，可以采用不同文件类型的model。以PyTorch为例，使用Netron打开我们保存的三级网络的保存文件`.pkl`就画出来了。
