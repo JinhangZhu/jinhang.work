@@ -8,6 +8,35 @@ slug: "review-hand-detection-using-multiple-proposals"
 
 This post involves the summaries of papers addressing hand detection or segmentations.<!--more-->
 
+## Left/Right Hand Segmentation
+
+> Betancourt, Alejandro, et al. "Left/right hand segmentation in egocentric videos." *Computer Vision and Image Understanding* 154 (2017): 73-81.
+
+传统的第一人称视角的方法将手部分割看作背景-前景问题，忽略了两点：一是手不仅仅是移动的皮肤，而且有交互性；二是靠得太近的手容易造成遮挡，从而识别为单个分割。**这篇论文设计了左右手识别，是基于角度和位置的Maxwell分布的**。
+
+![image-20200728190758286](https://i.loli.net/2020/07/29/k1D4UOg6BMoK32L.png)
+
+### SOTA方法的分析
+
+做手部的分割，SOTA算法一般分为以下几步：
+
+**Hand-detection**. 这一步的目的是优化用于计算的来源，即从整张图片到包含手的小框，也可以减小后一步中假阳性的概率。检测的算法有很多，作者没有详细讲。
+
+**Hand-segmentation**. 目的是找到属于第一人称用户的手的像素集合。最古老经典的方法是*color-based*，作者给出了基于颜色的进阶方法，比如*Random Forest classifier*[^RFC]，训练之后可以区分阳/阴性的像素（阳/阴性是针对是否属于手来说的）；除此外还有这个策略的改进版：使用*形状敏感分类器*或者*超像素*。
+
+[^RFC]:C. Li and K. Kitani, “Pixel-Level Hand Detection in Ego-centric Videos,”in 2013 IEEE Conference on Computer Vision and Pattern Recognition. jun 2013, pp. 3570–3577, Ieee.
+**Hand-identification**. 这一步往往是segmentation的后续步骤，有了所有手的像素之后，首先是最直接的方法：*站边方法*，即根据这些皮肤色块站哪边来判断是哪只手。但是这种方法在三种情况下表现不好：
+
+1. 焦点和相机位置会破坏皮肤色块的对称性；
+2. 用户在视野边缘操作物品；
+3. 两只手靠得很近成为一个色块。
+
+然后有*分类讨论法*，将图片分为单左手，单右手，两只不同手和两只互动手，但是这种方法把问题看得太简单了。另外的有*基于目标相对位置*的方法，*Bayesian method*等。
+
+### Hand identification细节
+
+
+
 ## Hand Detection Using Multiple Proposals
 
 > Mittal, Arpit, Andrew Zisserman, and Philip HS Torr. "Hand detection using multiple proposals." *BMVC*. Vol. 40. No. 12. 2011.
