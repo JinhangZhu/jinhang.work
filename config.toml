@@ -2,7 +2,7 @@
 # 站点配置
 
 baseURL = "https://jinhang.work/"
-title = "Jinhang"
+title = "触发记"
 languageCode = "zh-CN"
 hasCJKLanguage = true
 # 版权信息（支持 Markdown）
@@ -342,7 +342,7 @@ uglyURLs = false
     # 说明：用于 JSON-LD、Open Graph
 
     # 站点的描述
-    siteDescription = "浪里白条的个人博客，主要关注计算机视觉，目标检测算法，自动控制算法等技术，也会记录生活中的点滴。"
+    siteDescription = "触发记，主要关注计算机视觉，目标检测算法，自动控制算法等技术，也会记录生活中的点滴。"
     # 说明：用于 HTML 的头部元数据、JSON-LD、
     #      Open Graph、Atom、RSS
 

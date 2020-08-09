@@ -12,6 +12,8 @@ dropCap: true
 
 Google Colab终究是一堆槽点，布大提供了超级计算机BlueCrystal Phase 4来服务研究人员的计算任务，本文就详细讲述如何在自己的电脑上使用这个珍贵资源。注：文章围绕Windows展开，不过差别不大，其他机型可以参考链接和引用解决。
 
+![image-20200809232833075](https://i.loli.net/2020/08/09/v36colfBA8n5Tqj.png)
+
 <!--more-->
 
 Google Colab提供的GPU资源我在三到五月间用了几次，用来训练YOLOv3模型，成功训练出来的是两次，分别是训练16张COCO数据集[^1]和700多张的自标注数据集[^2]，前一个好说，数据集小训练得飞快，后一个训练简直是损耗我的耐心，过程中出现了一些印象深刻的坑：
@@ -56,33 +58,19 @@ Google Colab提供的GPU资源我在三到五月间用了几次，用来训练YO
 
 N.B. 如果是在校园网Eduroam环境下使用电脑，不需要配置VPN。
 
-<span class="update-phrase">[Updated 2020.7.18]</span>使用VPN连接也有固定时限12小时。诶你可能会问：那和我用Colab没差呀？实践证明，相同代码和数据运行，BC4更快。
-
 https://www.bris.ac.uk/it-services/advice/homeusers/uobonly/uobvpn
 
-选择相应的系统，比如Windows 10，下载Big-IP Edge客户端并安装。从启动页打开客户端，出现下面的界面：
-
-![image-20200708105230994](https://i.loli.net/2020/07/08/9cfEwS4FN67JVrK.png)
-
-我电脑因为配置过下一节的远程桌面，电脑有了我的学生信息，所以直接弹出下面的可直接选择登录的界面。如果没有，就到[这个网页](https://www.bris.ac.uk/it-services/advice/homeusers/uobonly/uobvpn/howto/windows/)跟着步骤走。
-
-![image-20200708105207772](https://i.loli.net/2020/07/08/xiUYtdgVS9DmuKw.png)
-
-连好后，桌面右下角图标就显示了客户端的图标：
-
-![image-20200708105550613](https://i.loli.net/2020/07/08/OwpYU6QyMCHGTos.png)
+选择相应的系统，比如Windows 10，下载Big-IP Edge客户端并安装。从启动页打开客户端启动连接。
 
 ### 远程桌面环境
 
 N.B. 如果是在校园网Eduroam环境下使用电脑，不需要配置远程桌面环境。
 
-<span class="update-phrase">[Updated 2020.7.18]</span>在运行过程中我处于睡觉状态，早上起来发现窗口都关了，连一个新的迭代期都没训练成，我猜应该是有时限而且很短的。
-
 http://www.bristol.ac.uk/it-services/advice/homeusers/remote/studentdesktop
 
 一般来说选择第一中connection下载，点击之后输入UoB的账号密码就可以连接上UoB的桌面了。
 
-### *PuTTY
+### PuTTY
 
 N.B. 如果是在远程桌面环境下，不需要安装PuTTY。
 
@@ -94,15 +82,16 @@ https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html，直接选择64-
 
 ```
 bc4login.acrc.bris.ac.uk
+# GPU: bc4gpulogin.acrc.bris.ac.uk
 ```
+
+注：**不要在GPU组上直接跑训练代码**！特别是大型数据集的训练，会占用很大的内存。正确做法是使用排队系统提交作业。
 
 ![image-20200707131535951](https://i.loli.net/2020/07/07/a8JRvYOVC6Bz7GE.png)
 
-点击*Open*，按照要求输入UoB账号和密码：
+点击*Open*，按照要求输入UoB账号和密码。
 
-![image-20200708110236658](https://i.loli.net/2020/07/08/tdPxLJWOqiQE7B1.png)
-
-## 使用BC4
+## 配置BC4
 
 官方文档：[ Blue Crystal Phase 4 User Documentation](https://www.acrc.bris.ac.uk/protected/bc4-docs/index.html)
 
@@ -112,78 +101,6 @@ bc4login.acrc.bris.ac.uk
 
 [^3]:可以参考开源工作者撰写的《快乐的Linux命令行》- http://billie66.github.io/TLCL/
 [^4]:不懂shell别说你会linux - jay的文章 - 知乎 https://zhuanlan.zhihu.com/p/104729643
-
----
-
-第一眼注意到的是shell提示符(shell prompt)，意为shell准备好了去接受命令的输入。
-
-```shell
-[lm19073@bc4login3 ~]$
-```
-
-不多废话，先走第一步， `Hello world!`。用到`echo`命令，首先使用命令帮助[^5]查看命令：
-
-[^5]:学会使用命令帮助 - https://linuxtools-rst.readthedocs.io/zh_CN/latest/base/01_use_man.html
-
-```shell
-[lm19073@bc4login3 ~]$ whatis echo
-echo (1)             - display a line of text
-echo (3x)            - curses input options
-```
-
-多的不说，尝试say hello：
-
-```shell
-[lm19073@bc4login3 ~]$ echo "Hello world!"
--bash: !": event not found
-[lm19073@bc4login3 ~]$ echo 'Hello world!'
-Hello world!
-[lm19073@bc4login3 ~]$ echo Hello!
-Hello!
-[lm19073@bc4login3 ~]$ echo '$(date)'
-$(date)
-[lm19073@bc4login3 ~]$ echo "$(date)"
-“▒Tue Jul 14 20:17:27 BST 2020
-```
-
-入门成功！现在来看看一下文件系统。基础的三个命令是`pwd`，`ls`，`cd`，分别是Printing working directory, list (out), change directory。其中单纯的`cd`可以直接改回Home directory。
-
-```shell
-[lm19073@bc4login3 ~]$ pwd
-/mnt/storage/home/lm19073
-[lm19073@bc4login3 ~]$ ls
-Use  yolov3
-[lm19073@bc4login3 ~]$ cd yolov3
-[lm19073@bc4login3 yolov3]$ cd
-[lm19073@bc4login3 ~]$ pwd
-/mnt/storage/home/lm19073
-[lm19073@bc4login3 ~]$ cd yolov3
-[lm19073@bc4login3 yolov3]$ ls
-Dockerfile  README.md  data       models.py         test.py   tutorial.ipynb  weights
-LICENSE     cfg        detect.py  requirements.txt  train.py  utils
-[lm19073@bc4login3 yolov3]$ cd data
-[lm19073@bc4login3 data]$ pwd
-/mnt/storage/home/lm19073/yolov3/data
-[lm19073@bc4login3 data]$ cd ..
-[lm19073@bc4login3 yolov3]$ cd data
-[lm19073@bc4login3 data]$ cd
-[lm19073@bc4login3 ~]$ pwd
-/mnt/storage/home/lm19073
-```
-
-要是在我的Home directory再往前一级呢？好像发现了什么不得了的东西，原来大家的都是公开的？以后用`rm`命令可得注意了，公共场所别把人家的删了。
-
-> ![image-20200715001501009](https://i.loli.net/2020/07/15/szvkm1HBaMxRF6Z.png)
-
-```shell
-[lm19073@bc4login3 home]$ pwd
-/mnt/storage/home
-[lm19073@bc4login3 home]$ ls
-NOT.lm14358     cl14975.tar.gz    hs12248         madjl           rw15131.tar.gz
-UoB             cl15341           hs12828         marrk           rw15164
-aa16169         cl15540           hs14458         mb16066         rw15911
-...
-```
 
 现在检查一下我的存储容量：
 
@@ -238,7 +155,7 @@ lrwxrwxrwx 1 lm19073 emat19t   28 Jul 15 00:23 scratch -> /mnt/storage/scratch/l
 drwxr-xr-x 8 lm19073 emat19t 4096 Jul 14 19:34 yolov3
 ```
 
-非常好！scratch这个软链接指向了我的独享的scratch space。这样的一个类似“指针”的操作有什么用呢？比如目标目录`/mnt/storage/scratch/lm19073`所属用户组`emat19t`经常对所管理的目录进行更新，把目录都用版本号来区别，而不是我现在的学号，这就很蛋疼了，每次访问目标目录还得去专门看一下版本号，然后敲出来，不如拿一个reference直接建立访问的桥梁。
+scratch这个软链接指向了我的独享的scratch space。这样的一个类似“指针”的操作有什么用呢？比如目标目录`/mnt/storage/scratch/lm19073`所属用户组`emat19t`经常对所管理的目录进行更新，把目录都用版本号来区别，而不是我现在的学号，这就很蛋疼了，每次访问目标目录还得去专门看一下版本号，然后敲出来，不如拿一个reference直接建立访问的桥梁。
 
 ### 模块信息
 
@@ -248,65 +165,15 @@ drwxr-xr-x 8 lm19073 emat19t 4096 Jul 14 19:34 yolov3
 
 我重连之后发现上回创建的scratch软链接和本身之前clone的yolov3的repo文件夹都还在home目录下，说明这里的空间都可以保留文件（无备份）。
 
-```shell
-# 发现基本的模块都有，pip暂无
-[lm19073@bc4login3 ~]$ which python3
-/usr/bin/python3
-[lm19073@bc4login3 ~]$ which git
-/usr/bin/git
-[lm19073@bc4login3 ~]$ which pip
-/usr/bin/which: no pip in (/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/mnt/storage/home/lm19073/.dotnet/tools:/usr/lpp/mmfs/bin:/opt/ddn/ime/bin:/mnt/storage/home/lm19073/.local/bin:/mnt/storage/home/lm19073/bin)
-```
-
-我先把yolov3文件夹删掉，使用`rm -rf yolov3`命令。然后重新克隆yolov3：
-
-```shell
-[lm19073@bc4login3 ~]$ git clone https://github.com/ultralytics/yolov3
-Cloning into 'yolov3'...
-...
-```
-
-进入scratch space，将COCO2014下载在scratch space里：
-```shell
-[lm19073@bc4login3 scratch]$ bash /mnt/storage/home/lm19073/yolov3/data/get_coco2014.sh
-```
-
-![image-20200715134254844](https://i.loli.net/2020/07/15/5W9VHsBfdqNQAhC.png)
-
-> 这里使用的是脚本`.sh`，通过命令访问网络链接下载数据解压到服务器上。那么<mark>我们自己的数据怎么上传上去呢？</mark>新版文档没有说明，所以我参考了一个较老版本的文档[^6]，对于使用Windows的我来说，下载**winSCP**来管理文件流。
+> <mark>我们自己的数据怎么上传上去呢？</mark>新版文档没有说明，所以我参考了一个较老版本的文档[^6]，对于使用Windows的我来说，下载**winSCP**来管理文件流。
 
 [^6]: How to copy files to and from the cluster - ACRC: BlueCrystal User Guide - https://www.acrc.bris.ac.uk/acrc/pdf/bc-user-guide.pdf
 
-在作者的配置里coco和yolov3目录并列的，为了不修改运行代码的options，我们给`scratch/coco`设置一个和`yolov3`并列的软链接。
-
-<img src="https://i.loli.net/2020/07/16/tzomkrQAecIf5gB.png" alt="image-20200715192838567" title="纯属偶然发现不加软链接名字自动分配basename">
-
 现在环境都配置好了！如果有报错，就参考下一章节Issues来解决。一切就绪后，跑代码。
 
-```shell
-[lm19073@bc4login3 yolov3]$ python detect.py
-Namespace(agnostic_nms=False, augment=False, cfg='cfg/yolov3-spp.cfg', classes=None, conf_thres=0.3, device='', fourcc='mp4v', half=False, img_size=512, iou_thres=0.6, names='data/coco.names', output='output', save_txt=False, source='data/samples', view_img=False, weights='weights/yolov3-spp-ultralytics.pt')
-Using CPU
+### Issues
 
-Model Summary: 225 layers, 6.29987e+07 parameters, 6.29987e+07 gradients
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100   408    0   408    0     0   1797      0 --:--:-- --:--:-- --:--:--  1789
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-100  240M    0  240M    0     0  38.9M      0 --:--:--  0:00:06 --:--:-- 51.7M
-Downloading https://drive.google.com/uc?export=download&id=1UcR-zVoMs7DH5dj3N1bswkiQTA4dmKF4 as weights/yolov3-spp-ultralytics.pt... Done (6.7s)
-image 1/2 data/samples/bus.jpg: 512x384 3 persons, 1 buss, 1 ties, Done. (0.583s)
-image 2/2 data/samples/zidane.jpg: 320x512 2 persons, 1 ties, Done. (0.538s)
-Results saved to /mnt/storage/home/lm19073/yolov3/output
-Done. (1.261s)
-```
-
-就这两张图片，BC4用时1.261秒，而相同的运算Colab上用时1.616秒，已经快了20%，所以在长时间的训练任务上，BC4应该更加占优势。不过一个无法避免的问题是，连接到服务器所需要的VPN最大时长也是12小时，所以该做的备份工作还是要做好，如checkpoint的储存，results的写入等。
-
-## Issues
-
-### *Python版本问题
+#### *Python版本问题
 
 选择运行：
 
@@ -330,7 +197,7 @@ Currently Loaded Modules:
 [lm19073@bc4login2 ~]$ python --version
 Python 3.7.4
 ```
-### *libstdc++问题
+#### *libstdc++问题
 
 ![image-20200716135338142](https://i.loli.net/2020/07/16/zfTYo9PZaeAwFjH.png)
 
@@ -370,9 +237,104 @@ Python 3.7.4
    export LD_LIBRARY_PATH=/mnt/storage/software/languages/anaconda/Anaconda3-2019-3.7/lib:$LD_LIBRARY_PATH
    ```
 
----
+#### *subprocess.CalledProcessError
+
+报错信息：
+
+![image-20200727215816390](https://i.loli.net/2020/07/28/L4J2FgNr8PUulfq.png)
+
+解决：找到git的位置，载入模块列表。
+
+```shell
+module load tools/git/2.18.0
+```
+
+## 提交作业
+
+BC4的文档对于[Job Scheduler](https://www.acrc.bris.ac.uk/protected/bc4-docs/scheduler/index.html#job-scheduler)讲解基本很清楚，不过对于初学者来说还是比较难懂，文档几乎没有提供可运行脚本的例子，综合多方资源[^slurm][^lmod][^triton][^yale]，以及在集群上的试错，我总结出两种配置：
+
+[^slurm]:[Slurm Workload Manager](https://slurm.schedmd.com/archive/slurm-16.05.8/sbatch.html)
+[^lmod]:[User Guide for Lmod](https://lmod.readthedocs.io/en/latest/010_user.html)
+[^triton]:[GPU Computing - Aalto scientific computing](https://scicomp.aalto.fi/triton/usage/gpu/)
+[^yale]:[Submission Script Examples - Yale Center for Research Computing](https://docs.ycrc.yale.edu/clusters-at-yale/job-scheduling/slurm-examples/)
+
+- SBATCH配置：单GPU
+
+  ```shell
+    #!/bin/bash
+  
+  #SBATCH --mail-user=lm19073
+  #SBATCH --mail-type=BEGIN,END,FAIL
+  #SBATCH --job-name=train-egohand
+  #SBATCH --output=train-egohand_%j.out
+  #SBATCH --error=train-egohand_%j.err
+  #SBATCH --nodes=1
+  #SBATCH --ntasks-per-node=4
+  #SBATCH --time=24:00:00
+  #SBATCH --mem=15G
+  #SBATCH --partition=gpu
+  #SBATCH --gres=gpu:1
+  ```
+
+- SBATCH配置：多GPU
+
+  ```shell
+  #!/bin/bash
+  
+  #SBATCH --mail-user=lm19073
+  #SBATCH --mail-type=BEGIN,END,FAIL
+  #SBATCH --job-name=train-epichands
+  #SBATCH --output=train-epichands_%j.out
+  #SBATCH --error=train-epichands_%j.err
+  #SBATCH --nodes=1
+  #SBATCH --ntasks-per-node=4
+  #SBATCH --time=3-00:00:00
+  #SBATCH --mem=16G
+  #SBATCH --partition=gpu
+  #SBATCH --gres=gpu:2
+  ```
+
+上文说到配置出能跑训练代码的环境，在BC4中，有几个模块是必需的：
+
+```shell
+module load CUDA
+module load languages/anaconda3/3.7
+module load tools/git/2.18.0
+export LD_LIBRARY_PATH=/mnt/storage/software/languages/anaconda/Anaconda3-2019-3.7/lib:$LD_LIBRARY_PATH 
+```
+
+接下来就是自己跑py程序的训练的命令语句。可以参考两个脚本示例：
+
+- Single GPU: [train_egohand.sh](https://github.com/JinhangZhu/project-diary/blob/master/scripts/train_egohand.sh)
+- Double GPU: [train_epichands.sh](https://github.com/JinhangZhu/project-diary/blob/master/scripts/train_epichands.sh)
+
+### 监控GPU状态
+
+我们在shell中通过sbatch命令提交用`train.sh`设计的作业：
+
+```shell
+$ sbatch train.sh
+```
+
+系统会打印一串表示作业ID的代码，如`3954950`，用`JobID`表示，如果我们想找到作业正在哪个节点上跑（以及状态）：
+
+```shell
+sacct -j <JobID> --format=JobID,JobName,Partition,QOS,Start,NodeList,State,ExitCode
+# -j之后的JobID输入时不带'<', '>'
+```
+
+连接上对应节点，查看GPU使用状态。如果想退出连接，输入`exit`即可[^ssh]。
+
+```shell
+$ ssh gpuxx
+$ watch -n 1 nvidia-smi
+```
+
+[^ssh]:[How do I exit an SSH connection?](https://superuser.com/questions/467398/how-do-i-exit-an-ssh-connection)
 
 ## References
+
+[BlueCrystal Phase 4 User Documentation](https://www.acrc.bris.ac.uk/protected/bc4-docs/index.html#)
 
 [3 个相见恨晚的 Google Colaboratory 奇技淫巧！](https://zhuanlan.zhihu.com/p/56581879)
 
