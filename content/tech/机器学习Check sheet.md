@@ -91,6 +91,7 @@ PyTorch
 - [PyTorch Tutorials](https://pytorch.org/tutorials/) || 官方
 - [PyTorch 动态神经网络](https://morvanzhou.github.io/tutorials/machine-learning/torch/) || 莫烦出品 | 入门 | 进阶
 - [动手学深度学习PyTorch实现](http://tangshusen.me/Dive-into-DL-PyTorch/#/)
+- [Deep Learning with PyTorch](https://github.com/deep-learning-with-pytorch/dlwpt-code) || 书籍 | 代码
 
 > [新手必备 | 史上最全的PyTorch学习资源汇总](https://zhuanlan.zhihu.com/p/64895011)
 

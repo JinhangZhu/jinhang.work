@@ -358,7 +358,7 @@ We present some updates to YOLO! We made a bunch of little design changes to mak
 
 
 <a id="markdown-tools" name="tools"></a>
-## Tools
+## Tools & Resources
 
 > [史上最全神经网络结构图画图工具介绍，没有之一！](https://zhuanlan.zhihu.com/p/31920000)
 
@@ -367,3 +367,9 @@ We present some updates to YOLO! We made a bunch of little design changes to mak
 ### Netron
 
 https://github.com/lutzroeder/netron，画神经网络结构图，可以采用不同文件类型的model。以PyTorch为例，使用Netron打开我们保存的三级网络的保存文件`.pkl`就画出来了。
+
+### Collection of CV Colab Notebooks
+
+[Top Computer Vision Google Colab Notebooks](https://www.qblocks.cloud/creators/computer-vision-google-colab-notebooks)
+
+> Here is a list of the top google colab notebooks that use computer vision to solve a complex problem such as object detection, classification etc...
