@@ -1,7 +1,12 @@
 {
-    "name": "Jinhangs",
-    "short_name": "Jinhangs",
+    "name": "触发记",
+    "short_name": "触发记",
     "icons": [
+        {
+            "src": "./icons/android-chrome-150x150.png",
+            "sizes": "150x150",
+            "type": "image/png"
+        },
         {
             "src": "./icons/android-chrome-512x512.png",
             "sizes": "512x512",
