@@ -193,11 +193,6 @@ uglyURLs = false
         weight = 1
         pre = "internal"
         # post = "home"
-    # [[menu.main]]
-    #     url = "/projects"
-    #     name = "作业"
-    #     weight = 2
-    #     pre = "internal"
     [[menu.main]]
         url = "/tech/"
         name = "技术"
@@ -230,9 +225,9 @@ uglyURLs = false
     [[menu.main]]
         weight = 7
         identifier = "theme-switcher"
-    [[menu.main]]
-        weight = 8
-        identifier = "lang-switcher"
+    # [[menu.main]]
+    #     weight = 8
+    #     identifier = "lang-switcher"
     # [[menu.main]]
     #     weight = 8
     #     identifier = "search"
