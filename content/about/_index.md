@@ -14,7 +14,7 @@ Email contact?👉🏻 <a href="mailto:jinhang.d.zhu@gmail.com" target="_blank" 
 
 | Date       | Description                              |
 | ---------- | ---------------------------------------- |
-|            |                                          |
+| 2020/09/10 | Submitted the Master's dissertation.     |
 | 2020/01/26 | Dissertation project kick-off.           |
 | 2019/09/14 | Enrolled with the University of Bristol. |
 
