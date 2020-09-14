@@ -95,6 +95,11 @@ PyTorch
 
 > [新手必备 | 史上最全的PyTorch学习资源汇总](https://zhuanlan.zhihu.com/p/64895011)
 
+### Python技巧
+
+- [**PyFormat** Using *%* and *.format()* for great good!](https://pyformat.info/)
+- [python-tabulate](https://pypi.org/project/tabulate/)
+
 <a id="markdown-机器学习基础" name="机器学习基础"></a>
 
 ## 机器学习基础
