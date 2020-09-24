@@ -5,6 +5,7 @@ categories: [Tech,"Machine learning"]
 tags: ["Machine learning"]
 slug: "machine-learning-check-sheet"
 weight: 1
+dropCap: false
 ---
 
 <img align="left" src="https://i.loli.net/2020/06/18/CR3xzLfpAb6OgHQ.png" style="zoom:3%;" /><span style="color:#fe6565;">[置顶] </span>我的机器学习学习之路 | Check sheet | Tutorials | 公开资源的搬运工。<!--more-->
@@ -174,7 +175,7 @@ PyTorch
 
 ### 会议
 
-CVPR | ECCV | ICCV 
+- 视觉领域三顶会：CVPR | ECCV | ICCV 
 
 <a id="markdown-工具" name="工具"></a>
 
