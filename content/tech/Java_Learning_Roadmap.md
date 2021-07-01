@@ -22,10 +22,11 @@ Java learning roadmap | Check sheet | Tutorials | Links to public resources
 
 ![core-java-cheatsheet](https://i.loli.net/2021/04/11/OYT6cw4Ra1r8CuL.jpg)
 
-## Online courses
+## Online resources
 
-- [Welcome to learning Java - Linkedin Learning](https://www.linkedin.com/learning/learning-java-4/welcome-to-learning-java), gradual learning process, especially good for English listeners.
+- [Welcome to learning Java - Linkedin Learning](https://www.linkedin.com/learning/learning-java-4/welcome-to-learning-java), gradual learning process, especially good for English listeners, but the course is rather basic and simple
 - [Java程序设计 - iLearningX](https://ilearningx.huawei.com/portal/courses/course-v1:HuaweiX+EBGTC00000457+Self-paced/about), iLearningX的在线课程，适合初学者学习
+- [The Java Tutorials](https://docs.oracle.com/javase/tutorial/index.html), the official Java documentation, especially for further learning
 
 ## Tools for coding
 
@@ -34,3 +35,8 @@ Java learning roadmap | Check sheet | Tutorials | Links to public resources
 Java Development Kit, complete tool for developing, debugging and monitoring Java applications.
 
 ![image-20210411122018640](https://i.loli.net/2021/04/11/xbQ6ewCo7SDXa9T.png)
+
+### IDE
+
+[IntelliJ](https://www.jetbrains.com/idea/)
+
